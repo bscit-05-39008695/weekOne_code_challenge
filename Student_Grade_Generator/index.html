@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grade Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 15%;
+            margin-bottom: 15%;
+            margin-left: 35%;
+            margin-right: 30%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+        }
+        input[type="number"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            width: 100%;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        div {
+            
+
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Student Grade Generator</h1>
+    <label for="marks">Enter student marks (0-100):</label>
+    <input type="number" id="marks" min="0" max="100">
+    <button onclick="getGrade()">Get Grade</button>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        function getGrade() {
+            const marksInput = document.getElementById('marks').value;
+            const marks = Number(marksInput);
+            const resultDiv = document.getElementById('result');
+
+            // Clear previous result
+            resultDiv.textContent = '';
+
+            // Validate input
+            if (marks < 0 || marks > 100) {
+                resultDiv.textContent = "Please enter a valid mark between 0 and 100.";
+                return;
+            }
+
+            let grade;
+
+            // Determine the grade based on marks
+            if (marks > 79) {
+                grade = 'A';
+            } else if (marks >= 60) {
+                grade = 'B';
+            } else if (marks >= 49) {
+                grade = 'C';
+            } else if (marks >= 40) {
+                grade = 'D';
+            } else {
+                grade = 'E';
+            }
+
+            resultDiv.textContent = `Grade: ${grade}`;
+        }
+    </script>
+
+</body>
+</html>

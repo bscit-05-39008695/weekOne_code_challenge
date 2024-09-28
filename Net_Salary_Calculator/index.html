@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Net Salary Calculator</title>
+</head>
+<body>
+    <h1>Net Salary Calculator</h1>
+    <label for="basicSalary">Basic Salary (KSh):</label>
+    <input type="number" id="basicSalary" placeholder="Basic Salary">
+    <br>
+    <label for="benefits">Benefits (KSh):</label>
+    <input type="number" id="benefits" placeholder="Benefits">
+    <br>
+    <button onclick="calculateNetSalary()">Calculate Net Salary</button>
+    
+    <h2>Results:</h2>
+    <p id="result"></p>
+
+    <script>
+        function calculateNetSalary() {
+            const basicSalary = parseFloat(document.getElementById('basicSalary').value) || 0;
+            const benefits = parseFloat(document.getElementById('benefits').value) || 0;
+            const grossSalary = basicSalary + benefits;
+
+            // Calculate Tax (PAYE)
+            let tax = 0;
+            if (grossSalary > 60000) {
+                tax = (grossSalary - 60000) * 0.20 + 0.15 * (60000 - 32334) + 0.10 * (32334 - 24000);
+            } else if (grossSalary > 32334) {
+                tax = (grossSalary - 32334) * 0.15 + 0.10 * (32334 - 24000);
+            } else if (grossSalary > 24000) {
+                tax = (grossSalary - 24000) * 0.10;
+            }
+
+            // Fixed NHIF and NSSF deductions
+            const nhifDeduction = 500; // Adjust as per actual rates
+            const nssfDeduction = 200; // Adjust as per actual rates
+
+            // Calculate Net Salary
+            const totalDeductions = tax + nhifDeduction + nssfDeduction;
+            const netSalary = grossSalary - totalDeductions;
+
+            // Display Results
+            const resultMessage = `
+                Gross Salary: KSh ${grossSalary.toFixed(2)}<br>
+                PAYE Tax: KSh ${tax.toFixed(2)}<br>
+                NHIF Deduction: KSh ${nhifDeduction}<br>
+                NSSF Deduction: KSh ${nssfDeduction}<br>
+                Total Deductions: KSh ${totalDeductions.toFixed(2)}<br>
+                Net Salary: KSh ${netSalary.toFixed(2)}
+            `;
+            document.getElementById('result').innerHTML = resultMessage;
+        }
+    </script>
+</body>
+</html>

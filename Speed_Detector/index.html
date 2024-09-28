@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Detector</title>
+</head>
+<body>
+    <h1>Speed Detector</h1>
+    <label for="speed">Enter the speed of the car (km/h):</label>
+    <input type="number" id="speed" placeholder="Speed">
+    <button onclick="checkSpeed()">Check Speed</button>
+    
+    <p id="result"></p>
+
+    <script>
+        function checkSpeed() {
+            const speed = parseFloat(document.getElementById('speed').value);
+            const speedLimit = 70;
+            let demeritPoints = 0;
+            let resultMessage = '';
+
+            if (isNaN(speed)) {
+                resultMessage = "Please enter a valid speed.";
+            } else if (speed < speedLimit) {
+                resultMessage = "Ok";
+            } else {
+                const overSpeed = speed - speedLimit;
+                demeritPoints = Math.floor(overSpeed / 5); // One demerit point for every 5 km/h over the limit
+                resultMessage = `Points: ${demeritPoints}`;
+
+                if (demeritPoints > 12) {
+                    resultMessage += " - License suspended";
+                }
+            }
+
+            document.getElementById('result').innerText = resultMessage;
+        }
+    </script>
+</body>
+</html>
